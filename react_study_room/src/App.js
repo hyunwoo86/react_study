@@ -1,24 +1,19 @@
+import { useContext, useState } from "react";
 import "./App.css";
-import { useState, useRef, useEffect } from "react";
+import Page from "./component/Page";
+import { ThemeContext } from "./context/ThemeContext";
+import { UserContextName } from "./context/UserContextName";
 
 function App() {
-  const inputRef = useRef();
-
-  useEffect(() => {
-    console.log("랜더: ");
-    console.log(inputRef);
-    inputRef.current.focus();
-  }, []);
-
-  const login = () => {
-    alert("환영한다" + inputRef.current.value);
-    inputRef.current.focus();
-  };
+  const [isDark, setIsDark] = useState(false);
+  const value_data = useContext(UserContextName);
+  console.log("use: " + value_data);
   return (
-    <div className="starcoding">
-      <input ref={inputRef} type="text" placeholder="user name"></input>
-      <button onClick={login}>login</button>
-    </div>
+    <UserContextName.Provider value={value_data}>
+      <ThemeContext.Provider value={{ isDark, setIsDark }}>
+        <Page></Page>;
+      </ThemeContext.Provider>
+    </UserContextName.Provider>
   );
 }
 
