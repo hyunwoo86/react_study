@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
 
 function App() {
+  const [names, setName] = useState(["홍길동", "김민수"]);
+  const [input, setInput] = useState("");
+
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+  };
+
+  const handleUpload = () => {
+    setName((preStat) => {
+      console.log("이전 state: " + preStat);
+      return [input, ...preStat];
+    });
+
+    setInput("");
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="test">
+      <input type="text" value={input} onChange={handleInputChange}></input>
+      <button onClick={handleUpload}>Uploasd</button>
+      {names.map((name, idx) => {
+        return <p key={idx}>{name}</p>;
+      })}
     </div>
   );
 }
