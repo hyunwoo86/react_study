@@ -1,47 +1,24 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
-import Timer from "./component/Timer";
-
-function Out_function() {
-  // console.log("outFunction");
-}
+import { useState, useRef } from "react";
 
 function App() {
-  // useEffect(Out_function);
-
-  // const [count, setCount] = useState(1);
-  // const [name, setName] = useState("");
-
-  // // useEffect(() => {
-  // //   console.log("count rendering");
-  // // }, [count]);
-
-  // useEffect(() => {
-  //   console.log("first rendering");
-  // }, []);
-
-  // const handleCountUpdate = () => {
-  //   setCount(count + 1);
-  // };
-
-  // const handleInputName = (e) => {
-  //   console.log();
-  //   setName(e.target.value);
-  // };
-  const [showTimer, setShowTimer] = useState(false);
-
-  const handleShowTimer = () => {
-    setShowTimer(!showTimer);
+  const [count, setCount] = useState(0);
+  const countRef = useRef(0);
+  console.log("rendering...");
+  const handleIncreaseCount = () => {
+    setCount(count + 1);
   };
+  const handleRefCount = () => {
+    countRef.current += 1;
+    console.log("ref : " + countRef.current);
+  };
+
   return (
     <div className="starcoding">
-      {showTimer && <Timer></Timer>}
-      <button onClick={handleShowTimer}>Toggle Timer</button>
-      {/* <button onClick={handleCountUpdate}>Update</button>
-      <span>count: {count}< /span>
-      <br></br>
-      <input type="text" onChange={handleInputName}></input>
-      name: {name} */}
+      <p>State: {count}</p>
+      <p>Ref: {countRef.current}</p>
+      <button onClick={handleIncreaseCount}>state 출력</button>
+      <button onClick={handleRefCount}>Ref 출력</button>
     </div>
   );
 }
