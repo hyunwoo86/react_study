@@ -2,26 +2,22 @@ import "./App.css";
 import { useState, useRef, useEffect } from "react";
 
 function App() {
-  const [count, setCount] = useState(1);
-  // const [render, setRender] = useState(1);
-  const renderUserCount = useRef(1);
+  const inputRef = useRef();
 
   useEffect(() => {
-    renderUserCount.current += 1;
-    console.log("무한 반복 탈출: " + renderUserCount.current);
-  });
+    console.log("랜더: ");
+    console.log(inputRef);
+    inputRef.current.focus();
+  }, []);
 
-  // useEffect(() => {
-  //   console.log("무한 반복, 랜더링");
-  //   setRender(render + 1);
-  // });
-
+  const login = () => {
+    alert("환영한다" + inputRef.current.value);
+    inputRef.current.focus();
+  };
   return (
     <div className="starcoding">
-      <p>count: {count}</p>
-      <button type="text" onClick={() => setCount(count + 1)}>
-        up
-      </button>
+      <input ref={inputRef} type="text" placeholder="user name"></input>
+      <button onClick={login}>login</button>
     </div>
   );
 }
