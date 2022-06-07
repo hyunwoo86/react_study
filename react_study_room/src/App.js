@@ -1,42 +1,47 @@
 // import { send } from "process";
 import { useState, useMemo, useEffect, useCallback } from "react";
 import "./App.css";
+import Box from "./component/Box";
 
 function App() {
-  const [number, setNumber] = useState(1);
-  const [toggle, setToggle] = useState(true);
-  // const someFunction = () => {
-  //   console.log("somFunc : number " + number);
-  //   return;
+  const [size, setSize] = useState(100);
+  const [isDark, setIsDark] = useState(false);
+
+  const createBoxStyle = useCallback(() => {
+    return {
+      backgroundColor: "pink",
+      width: `${size}px`,
+      height: `${size}px`,
+    };
+  }, [size]);
+  // const createBoxStyle = () => {
+  //   return {
+  //     backgroundColor: "pink",
+  //     width: `${size}px`,
+  //     height: `${size}px`,
+  //   };
   // };
-
-  const someFunction = useCallback(() => {
-    console.log("somFunc : number " + number);
-    return;
-  }, [number]);
-
-  useEffect(() => {
-    console.log("useEffect");
-  }, [someFunction]);
-
   return (
-    <div>
+    <div
+      style={{
+        background: isDark ? "black" : "white",
+      }}
+    >
       <input
         type="number"
-        value={number}
+        value={size}
         onChange={(e) => {
-          setNumber(e.target.value);
+          setSize(e.target.value);
         }}
       ></input>
-
-      <button onClick={someFunction}>call someFunc</button>
       <button
         onClick={() => {
-          setToggle(!toggle);
+          setIsDark(!isDark);
         }}
       >
-        {toggle.toString()}
+        change back color
       </button>
+      <Box createBoxStyle={createBoxStyle}></Box>
     </div>
   );
 }
