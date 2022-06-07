@@ -1,45 +1,44 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import "./App.css";
 
-const hardCalculate = (number) => {
-  console.log("어려운 계산 함수");
-  for (let i = 0; i < 99999999; i++) {}
-  return number + 10000;
-};
-
-const easyCalculate = (number) => {
-  console.log("쉬운 계산 함수");
-  return number + 1;
-};
-
 function App() {
-  const [hardNumber, setHardNumber] = useState(1);
-  const [esayNumber, setEsayNumber] = useState(1);
-  const hardSum = useMemo(() => {
-    hardCalculate(hardNumber);
-  }, [hardNumber]);
-  const esaySum = easyCalculate(esayNumber);
+  const [number, setNumber] = useState(0);
+  const [isKorea, setIsKorea] = useState(true);
+  // const location = isKorea ? "한국" : "외국";
+  // const location = { country: isKorea ? "한국" : "외국" }; // 객체는 주소가 저징됨으로, 렌더링 할 때마다, 주소가 바뀌어 useEffect가 계속 호출 된다.
+  const location = useMemo(() => {
+    return {
+      country: isKorea ? "한국" : "외국",
+    };
+  }, [isKorea]);
+
+  useEffect(() => {
+    console.log("useEffect 호출");
+  }, [location]);
+
   return (
     <div>
-      <h3>어려운 계산기</h3>
-      <input
-        type="number"
-        value={hardNumber}
-        onChange={(e) => {
-          setHardNumber(parseInt(e.target.value));
-        }}
-      ></input>
-      <span>+10000 = {hardSum}</span>
+      <h2>하루에 얼마나 먹니?</h2>
 
-      <h3>쉬운 계산기</h3>
       <input
         type="number"
-        value={esayNumber}
+        value={number}
         onChange={(e) => {
-          setEsayNumber(parseInt(e.target.value));
+          setNumber(e.target.value);
         }}
       ></input>
-      <span>+1 = {esaySum}</span>
+
+      <hr></hr>
+
+      <h2>어느 나라에서 왔니?</h2>
+      <p>나라: {location.country}</p>
+      <button
+        onClick={() => {
+          setIsKorea(!isKorea);
+        }}
+      >
+        비행기 타자
+      </button>
     </div>
   );
 }
