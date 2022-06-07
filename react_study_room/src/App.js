@@ -1,25 +1,26 @@
-import { useState, useMemo, useEffect } from "react";
+// import { send } from "process";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import "./App.css";
 
 function App() {
-  const [number, setNumber] = useState(0);
-  const [isKorea, setIsKorea] = useState(true);
-  // const location = isKorea ? "한국" : "외국";
-  // const location = { country: isKorea ? "한국" : "외국" }; // 객체는 주소가 저징됨으로, 렌더링 할 때마다, 주소가 바뀌어 useEffect가 계속 호출 된다.
-  const location = useMemo(() => {
-    return {
-      country: isKorea ? "한국" : "외국",
-    };
-  }, [isKorea]);
+  const [number, setNumber] = useState(1);
+  const [toggle, setToggle] = useState(true);
+  // const someFunction = () => {
+  //   console.log("somFunc : number " + number);
+  //   return;
+  // };
+
+  const someFunction = useCallback(() => {
+    console.log("somFunc : number " + number);
+    return;
+  }, [number]);
 
   useEffect(() => {
-    console.log("useEffect 호출");
-  }, [location]);
+    console.log("useEffect");
+  }, [someFunction]);
 
   return (
     <div>
-      <h2>하루에 얼마나 먹니?</h2>
-
       <input
         type="number"
         value={number}
@@ -28,16 +29,13 @@ function App() {
         }}
       ></input>
 
-      <hr></hr>
-
-      <h2>어느 나라에서 왔니?</h2>
-      <p>나라: {location.country}</p>
+      <button onClick={someFunction}>call someFunc</button>
       <button
         onClick={() => {
-          setIsKorea(!isKorea);
+          setToggle(!toggle);
         }}
       >
-        비행기 타자
+        {toggle.toString()}
       </button>
     </div>
   );
