@@ -1,47 +1,60 @@
 // import { send } from "process";
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useState, useReducer } from "react";
 import "./App.css";
-import Box from "./component/Box";
+
+// reducer - state를 업데이트를 하는 역할 (은행)
+// dispatch - state 업데이트를 위한 요구
+// action - 요구의 내용
+
+const ACTION_TYPES = {
+  deposit: "deposit",
+  withdraw: "widthdraw",
+};
+
+const reducer = (state, action) => {
+  console.log(action);
+  console.log(state);
+
+  switch (action.type) {
+    case ACTION_TYPES.deposit:
+      return state + action.payload;
+    case ACTION_TYPES.withdraw:
+      return state - action.payload;
+    default:
+      return state;
+  }
+};
 
 function App() {
-  const [size, setSize] = useState(100);
-  const [isDark, setIsDark] = useState(false);
-
-  const createBoxStyle = useCallback(() => {
-    return {
-      backgroundColor: "pink",
-      width: `${size}px`,
-      height: `${size}px`,
-    };
-  }, [size]);
-  // const createBoxStyle = () => {
-  //   return {
-  //     backgroundColor: "pink",
-  //     width: `${size}px`,
-  //     height: `${size}px`,
-  //   };
-  // };
+  const [number, setNumber] = useState(0);
+  const [money, dispatch] = useReducer(reducer, 0);
   return (
-    <div
-      style={{
-        background: isDark ? "black" : "white",
-      }}
-    >
+    <div>
+      <h2>은행에 온것을 환영합니다.</h2>
+      <p>잔고: {money}원</p>
       <input
         type="number"
-        value={size}
+        value={number}
         onChange={(e) => {
-          setSize(e.target.value);
+          setNumber(parseInt(e.target.value));
         }}
+        step="1000"
       ></input>
+
       <button
         onClick={() => {
-          setIsDark(!isDark);
+          dispatch({ type: ACTION_TYPES.deposit, payload: number });
         }}
       >
-        change back color
+        예금
       </button>
-      <Box createBoxStyle={createBoxStyle}></Box>
+      <button
+        onClick={() => {
+          dispatch({ type: ACTION_TYPES.withdraw, payload: number });
+        }}
+      >
+        출금
+      </button>
     </div>
   );
 }
