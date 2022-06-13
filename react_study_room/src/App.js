@@ -1,23 +1,33 @@
-import React, { useState } from "react";
-import "./App.scss";
-import CheckBox from "./components/CheckBox";
+import React from "react";
+import styled, { ThemeProvider } from "styled-components";
+import Button from "./components/ButtonStyled";
+
+const AppBlock = styled.div`
+   width: 512px;
+   margin: 0 auto;
+   margin-top: 4rem;
+   border: 1px solid black;
+   padding: 1rem;
+`;
 
 function App() {
-  const [check, setCheck] = useState(false);
-  const onChange = (e) => {
-    setCheck(e.target.checked);
-  };
-  return (
-    <div>
-      <CheckBox onChange={onChange} checked={check}>
-        다음 약관에 모두 동의
-      </CheckBox>
-      <p>
-        <b>check: </b>
-        {check ? "true" : "false"}
-      </p>
-    </div>
-  );
+   return (
+      <ThemeProvider
+         theme={{
+            palette: {
+               blue: "#228be6",
+               gray: "#495057",
+               pink: "#f06595",
+            },
+         }}
+      >
+         <AppBlock>
+            <Button>BUTTON</Button>
+            <Button color="gray">BUTTON</Button>
+            <Button color="pink">BUTTON</Button>
+         </AppBlock>
+      </ThemeProvider>
+   );
 }
 
 export default App;
