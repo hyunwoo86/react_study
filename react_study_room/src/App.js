@@ -60,7 +60,7 @@ function App() {
   return (
     <div>
       <h1>출석부</h1>
-      <p>총 학새 수: {studentInfo.count}</p>
+      <p>총 학생 수: {studentInfo.count}</p>
       <input
         type="text"
         placeholder="이름을 입력해라"
