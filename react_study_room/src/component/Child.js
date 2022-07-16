@@ -1,12 +1,12 @@
 import React, { memo } from "react";
 
-const Child = ({ name }) => {
+const Child = ({ name, telMe }) => {
   console.log("자식 컴포넌트가 렌더링 되었습니다");
   return (
     <div style={{ border: "2px solid powderblue", padding: "10px" }}>
       <h3>👨‍👩‍👧‍👦자녀</h3>
-      <p>성: {name.lastName}</p>
-      <p>이름: {name.firstName}</p>
+      <p>이름: {name}</p>
+      <button onClick={telMe}>love check</button>
     </div>
   );
 };
