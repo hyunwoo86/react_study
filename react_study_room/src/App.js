@@ -1,90 +1,26 @@
-// import { send } from "process";
-import { useState, useReducer } from "react";
-import "./App.css";
-import Student from "./component/Student";
+import { useState } from "react";
+import Child from "./component/Child";
 
-// reducer - state를 업데이트를 하는 역할 (은행)
-// dispatch - state 업데이트를 위한 요구
-// action - 요구의 내용
-
-const reducer = (state, action) => {
-  console.log(action);
-  console.log(state);
-
-  switch (action.type) {
-    case "add-student":
-      const name = action.payload.name;
-      const newStudent = {
-        id: Date.now(),
-        name,
-        isHear: false,
-      };
-      console.log(name);
-      return {
-        count: state.count + 1,
-        students: [...state.students, newStudent],
-      };
-
-    case "delete-student":
-      return {
-        count: state.count - 1,
-        students: state.students.filter(
-          (student) => student.id !== action.payload.id
-        ),
-      };
-
-    case "mark-student":
-      return {
-        count: state.count,
-        students: state.students.map((student) => {
-          if (student.id === action.payload.id) {
-            return { ...student, isHear: !student.isHear };
-          }
-          return student;
-        }),
-      };
-
-    default:
-      return state;
-  }
-};
-
-const initialState = {
-  count: 0,
-  students: [],
-};
 function App() {
-  const [name, setName] = useState("");
-  const [studentInfo, dispatch] = useReducer(reducer, initialState);
+  const [parentAge, setParentAge] = useState(0);
+  const [childAge, setChildAge] = useState(0);
 
+  const incrementParentAge = () => {
+    setParentAge(parentAge + 1);
+  };
+
+  const incrementChildAge = () => {
+    setChildAge(childAge + 1);
+  };
+
+  console.log("부모 컴퍼넌트가 랜더링 되었습니다.");
   return (
-    <div>
-      <h1>출석부</h1>
-      <p>총 학생 수: {studentInfo.count}</p>
-      <input
-        type="text"
-        placeholder="이름을 입력해라"
-        value={name}
-        onChange={(e) => {
-          setName(e.target.value);
-        }}
-      ></input>
-      <button
-        onClick={() => dispatch({ type: "add-student", payload: { name } })}
-      >
-        추가
-      </button>
-      {studentInfo.students.map((student) => {
-        return (
-          <Student
-            key={student.id}
-            name={student.name}
-            dispatch={dispatch}
-            id={student.id}
-            isHear={student.isHear}
-          ></Student>
-        );
-      })}
+    <div style={{ border: "2px solid navy", padding: "10px" }}>
+      <h1>😍부모</h1>
+      <p>age: {parentAge}</p>
+      <button onClick={incrementParentAge}>부모 나이 증가</button>
+      <button onClick={incrementChildAge}>자녀 나이 증가</button>
+      <Child name={"자녀"} age={childAge}></Child>
     </div>
   );
 }
