@@ -1,11 +1,20 @@
 import React from "react";
+import Column from "./Column";
 
 const Components = () => {
   return (
-    <React.Fragment>
-      <h1>안녕하세요 리액트</h1>
-      <p>반가워요</p>
-    </React.Fragment>
+    <>
+      <table>
+        <tbody>
+          <tr>
+            <Column />
+          </tr>
+          <tr>
+            <Column />
+          </tr>
+        </tbody>
+      </table>
+    </>
   );
 };
 export default Components;
